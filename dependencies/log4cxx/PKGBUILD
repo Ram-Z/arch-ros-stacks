@@ -13,12 +13,19 @@ source=(http://archive.apache.org/dist/logging/$pkgname/$pkgver/apache-$pkgname-
 md5sums=('b30ffb8da3665178e68940ff7a61084c'
          'dfa17719a57b19f12cbef94419a2aac8')
 
+prepare() {
+  cd "$srcdir"/apache-$pkgname-$pkgver
+
+  patch -p1 < "$srcdir"/log4cxx-0.10.0-missing_includes.patch
+}
+
 build() {
-  cd $startdir/src/apache-$pkgname-$pkgver
-
-  patch -p1 < $startdir/log4cxx-0.10.0-missing_includes.patch
-
+  cd "$srcdir"/apache-$pkgname-$pkgver
   ./configure --prefix=/usr --disable-static
-  make || return 1
-  make DESTDIR=$startdir/pkg install
+  make
+}
+
+package() {
+  cd "$srcdir"/apache-$pkgname-$pkgver
+  make DESTDIR="$pkgdir" install
 }
