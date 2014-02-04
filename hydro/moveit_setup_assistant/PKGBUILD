@@ -16,7 +16,7 @@ ros_depends=(ros-hydro-moveit-ros-planning
   ros-hydro-moveit-core)
 depends=(${ros_depends[@]}
   yaml-cpp0.3
-  ogre-1.8)
+  ogre)
 
 _tag=release/hydro/moveit_setup_assistant/${pkgver}-${_pkgver_patch}
 _dir=moveit_setup_assistant

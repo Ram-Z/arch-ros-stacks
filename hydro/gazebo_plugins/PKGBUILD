@@ -35,7 +35,7 @@ ros_depends=(ros-hydro-rosconsole
   ros-hydro-pcl-ros)
 depends=(${ros_depends[@]}
   gazebo
-  ogre-1.8)
+  ogre)
 
 _tag=release/hydro/gazebo_plugins/${pkgver}-${_pkgver_patch}
 _dir=gazebo_plugins

@@ -34,13 +34,7 @@ ros_makedepends=(ros-hydro-rosconsole
   ros-hydro-catkin
   ros-hydro-tf)
 makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]}
-  qt
-  ogre-1.8
-  assimp
-  eigen3
-  tinyxml
-  yaml-cpp)
+  ${ros_makedepends[@]})
 
 ros_depends=(ros-hydro-rosconsole
   ros-hydro-resource-retriever
@@ -68,7 +62,7 @@ ros_depends=(ros-hydro-rosconsole
   ros-hydro-media-export)
 depends=(${ros_depends[@]}
   qt
-  ogre-1.8
+  ogre
   assimp
   eigen3
   tinyxml
@@ -91,9 +85,9 @@ build() {
   # Fix Python2/Python3 conflicts
   /usr/share/ros-build-tools/fix-python-scripts.sh ${srcdir}/${_dir}
 
-  # Adapt paths for Ogre 1.8
-  export PKG_CONFIG_PATH="/opt/OGRE-1.8/lib/pkgconfig:$PKG_CONFIG_PATH"
-  export LD_LIBRARY_PATH="/opt/OGRE-1.8/lib:$LD_LIBRARY_PATH"
+#  # Adapt paths for Ogre 1.8
+#  export PKG_CONFIG_PATH="/opt/OGRE-1.8/lib/pkgconfig:$PKG_CONFIG_PATH"
+#  export LD_LIBRARY_PATH="/opt/OGRE-1.8/lib:$LD_LIBRARY_PATH"
 
   # Build
   cmake ${srcdir}/${_dir} \
@@ -103,8 +97,8 @@ build() {
         -DPYTHON_EXECUTABLE=/usr/bin/python2 \
         -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
         -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
-        -DSETUPTOOLS_DEB_LAYOUT=OFF \
-        -DCMAKE_LIBRARY_PATH="/opt/OGRE-1.8/lib"
+        -DSETUPTOOLS_DEB_LAYOUT=OFF
+#        -DCMAKE_LIBRARY_PATH="/opt/OGRE-1.8/lib"
   make
 }
 
