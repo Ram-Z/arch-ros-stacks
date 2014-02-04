@@ -11,7 +11,7 @@ url='http://code.google.com/p/argparse/'
 conflicts=('argparse')
 license=('Apache')
 depends=('python2')
-makedepends=('setuptools')
+makedepends=('python2-setuptools')
 source=("http://argparse.googlecode.com/files/argparse-$pkgver.tar.gz")
 md5sums=('2fbef8cb61e506c706957ab6e135840c')
 
