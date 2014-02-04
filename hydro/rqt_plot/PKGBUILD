@@ -17,7 +17,7 @@ ros_depends=(ros-hydro-rqt-gui-py
   ros-hydro-rqt-py-common)
 depends=(${ros_depends[@]}
   python2-matplotlib
-  pyqwt)
+  python2-pyqwt)
 
 _tag=release/hydro/rqt_plot/${pkgver}-0
 _dir=rqt_plot
