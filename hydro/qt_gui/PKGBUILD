@@ -13,7 +13,7 @@ ros_depends=(ros-hydro-python-qt-binding)
 depends=(${ros_depends[@]}
   qt
   tango-icon-theme
-  python2-pyqt)
+  python2-pyqt4)
 
 _tag=release/hydro/qt_gui/${pkgver}-0
 _dir=qt_gui
