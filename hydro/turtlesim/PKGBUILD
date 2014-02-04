@@ -20,7 +20,7 @@ ros_depends=(ros-hydro-message-generation
   ros-hydro-rostime
   ros-hydro-std-msgs)
 depends=(${ros_depends[@]}
-  qt4)
+  qt)
 
 _tag=release/hydro/turtlesim/${pkgver}-0
 _dir=turtlesim

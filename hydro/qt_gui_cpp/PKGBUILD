@@ -13,7 +13,7 @@ ros_depends=(ros-hydro-python-qt-binding
   ros-hydro-qt-gui
   ros-hydro-pluginlib)
 depends=(${ros_depends[@]}
-  qt4
+  qt
   tinyxml
   pkg-config)
 

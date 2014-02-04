@@ -35,7 +35,7 @@ ros_makedepends=(ros-hydro-rosconsole
   ros-hydro-tf)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  qt4
+  qt
   ogre-1.8
   assimp
   eigen3
@@ -67,7 +67,7 @@ ros_depends=(ros-hydro-rosconsole
   ros-hydro-tf
   ros-hydro-media-export)
 depends=(${ros_depends[@]}
-  qt4
+  qt
   ogre-1.8
   assimp
   eigen3
