@@ -1,0 +1,28 @@
+# Maintainer:
+# Contributor: Andrea Scarpino <andrea@archlinux.org>
+
+pkgname=festival-english
+pkgdesc="British and American English Male speaker"
+pkgver=2.0.95
+pkgrel=2
+arch=('any')
+url="http://www.cstr.ed.ac.uk/projects/festival/"
+license=('custom')
+depends=('festival')
+source=(
+     #   "http://www.cstr.ed.ac.uk/downloads/festival/${pkgver}/festvox_cmu_us_awb_cg.tar.gz"
+     #   "http://www.cstr.ed.ac.uk/downloads/festival/${pkgver}/festvox_cmu_us_rms_cg.tar.gz"
+     #   "http://www.cstr.ed.ac.uk/downloads/festival/${pkgver}/festvox_cmu_us_slt_arctic_hts.tar.gz"
+        "http://www.cstr.ed.ac.uk/downloads/festival/${pkgver}/festvox_kallpc16k.tar.gz"
+        "http://www.cstr.ed.ac.uk/downloads/festival/${pkgver}/festvox_rablpc16k.tar.gz"
+        'LICENSE')
+md5sums=('3869af78f473b616601cac3fa83cc14e'
+         '34cb2478f5b8fa1ed02f5cbb496c1dcd'
+         'eb7167e849fbd166699eef79e87a7e36')
+
+package() {
+  cd ${srcdir}
+  install -d "${pkgdir}/usr/share/festival/voices/"
+  cp -rf festival/lib/voices/english "${pkgdir}/usr/share/festival/voices/"
+  install -Dm644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/festival-english/LICENSE"
+}

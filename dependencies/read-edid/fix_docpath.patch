@@ -1,0 +1,8 @@
+--- CMakeLists.txt	2014-02-05 01:14:55.255045547 +0100
++++ CMakeLists.txt.new	2014-02-05 01:21:54.507657507 +0100
+@@ -13,4 +13,4 @@
+ add_subdirectory (parse-edid)
+ 
+ INSTALL(FILES get-edid.man DESTINATION share/man)
+-INSTALL(FILES AUTHORS ChangeLog COPYING NEWS README DESTINATION share/doc)
++INSTALL(FILES AUTHORS ChangeLog COPYING NEWS README DESTINATION share/doc/${CMAKE_PROJECT_NAME})

@@ -1,0 +1,30 @@
+# Maintainer: Ram-Z <ram-z@chakra-project.org>
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
+# Contributor: Aris Synodinos <arissynod-gmail-com>
+pkgname=sdformat-hg
+_pkgname=sdformat
+pkgver=1
+pkgrel=1
+pkgdesc="SDF Converter for gazebo"
+arch=('i686' 'x86_64')
+url="http://gazebosim.org/"
+license=('Apache')
+depends=('boost' 'tinyxml' 'doxygen' 'libtar')
+provides=('sdformat')
+conflicts=('sdformat')
+makedepends=('mercurial' 'cmake')
+source=("hg::http://bitbucket.org/osrf/$_pkgname")
+md5sums=('SKIP')
+
+build() {
+  cd $_pkgname
+  cmake . \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_INSTALL_DIR=lib
+  make
+}
+
+package() {
+  cd $_pkgname
+  make DESTDIR="$pkgdir" install
+}
