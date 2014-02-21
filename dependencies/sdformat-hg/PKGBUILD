@@ -1,6 +1,7 @@
 # Maintainer: Ram-Z <ram-z@chakra-project.org>
 # Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
 # Contributor: Aris Synodinos <arissynod-gmail-com>
+
 pkgname=sdformat-hg
 _pkgname=sdformat
 pkgver=1
@@ -13,7 +14,7 @@ depends=('boost' 'tinyxml' 'doxygen' 'libtar')
 provides=('sdformat')
 conflicts=('sdformat')
 makedepends=('mercurial' 'cmake')
-source=("hg::http://bitbucket.org/osrf/$_pkgname")
+source=("$_pkgname::hg+http://bitbucket.org/osrf/$_pkgname")
 md5sums=('SKIP')
 
 build() {
