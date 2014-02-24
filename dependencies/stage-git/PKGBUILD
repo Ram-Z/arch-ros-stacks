@@ -1,0 +1,34 @@
+# Maintainer: Samir Benmendil <ram-z[at]chakra-project[dot]org>
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
+# Mantainer: Attilio Priolo <attilio.priolo@gmail.com>
+# Contributor: Renato Garcia <fgar.renato@gmail.com>
+# Contributor: Yannick Poirier <contact@yannickpoirier.fr>
+
+pkgname=stage-git
+pkgver=4.1.1.r26.gf9c59ca
+pkgrel=1
+pkgdesc='Fast and scalable robot simulator'
+arch=('any')
+url='http://playerstage.sourceforge.net'
+license=('GPL')
+depends=('fltk' 'libpng' 'player')
+conflicts=('stage' 'stage3')
+makedepends=('cmake')
+source=("$pkgname::git+https://github.com/rtv/Stage.git")
+md5sums=('SKIP')
+
+pkgver() {
+  cd $pkgname
+  git describe --long | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
+}
+
+build() {
+  cd $pkgname
+  cmake . -DCMAKE_INSTALL_PREFIX=/usr
+  make
+}
+
+package() {
+  cd $pkgname
+  make DESTDIR="$pkgdir" install
+}

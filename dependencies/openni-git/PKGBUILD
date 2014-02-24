@@ -1,0 +1,61 @@
+# Maintainer: Samir Benmendil <ram-z[at]chakra-project[dot]org>
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
+# Contributor: Sven Schneider <archlinux.sandmann@googlemail.com>
+# Contributor: bugix
+# Contributor: Lubosz Sarnecki <lubosz at gmail>
+
+pkgname=openni-git
+pkgver=1.5.7.8.r3.g1e9524f
+pkgrel=1
+pkgdesc="The OpenNI Framework provides the interface for physical devices and for middleware components"
+arch=('i686' 'x86_64')
+url="http://www.openni.org/"
+license=('GPL')
+depends=('freeglut' 'mesa' 'libusb' 'java-environment')
+makedepends=('git')
+provides=('openni')
+conflicts=('openni')
+install="openni.install"
+source=("$pkgname::git://github.com/OpenNI/OpenNI.git")
+md5sums=('SKIP')
+
+if [ "${CARCH}" = "x86_64" ]; then
+  _platform=x64
+else
+  _platform=x86
+fi
+
+pkgver() {
+  cd $pkgname
+  git describe --long | sed -r 's/^Stable.//;s/([^-]*-g)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd $pkgname
+  find Samples -type f -exec sed -i 's#../../../../Data/SamplesConfig.xml#/usr/share/openni/SamplesConfig.xml#g' {} \;
+  if [ -f Common ]; then ln -fs `cat Common` Common; fi
+}
+
+build() {
+  cd $pkgname/Platform/Linux/Build
+
+  LDFLAGS+=' -lGL' make
+}
+
+package() {
+  install -d -m755 "${pkgdir}"/usr/{lib,bin,share/openni,include/ni/Linux-x86}
+  install -d -m755 "${pkgdir}"/var/lib/ni
+
+  cd "$srcdir"/$pkgname/Include
+  install *.h "${pkgdir}"/usr/include/ni
+  install Linux-x86/* "${pkgdir}"/usr/include/ni/Linux-x86
+
+  cd "$srcdir"/$pkgname/Data
+  install SamplesConfig.xml "${pkgdir}"/usr/share/openni
+
+  cd "$srcdir"/$pkgname/Platform/Linux/Bin/${_platform}-Release
+  install niLicense niReg "${pkgdir}"/usr/bin
+  install Sample* "${pkgdir}"/usr/bin
+
+  install libnimCodecs.so libnimMockNodes.so libnimRecorder.so libOpenNI.so libOpenNI.jni.so "${pkgdir}"/usr/lib
+}
