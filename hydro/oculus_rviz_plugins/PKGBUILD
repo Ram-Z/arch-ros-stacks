@@ -18,7 +18,7 @@ makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
   qt4
   boost
-  ogre-1.8)
+  ogre)
 
 ros_depends=(ros-hydro-tf
   ros-hydro-roscpp
@@ -27,7 +27,7 @@ ros_depends=(ros-hydro-tf
 depends=(${ros_depends[@]}
   qt4
   boost
-  ogre-1.8)
+  ogre)
 
 _tag=release/hydro/oculus_rviz_plugins/${pkgver}-${_pkgver_patch}
 _dir=oculus_rviz_plugins
