@@ -22,7 +22,7 @@ ros_makedepends=(ros-hydro-map-server
   ros-hydro-sensor-msgs)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  qt4)
+  qt)
 
 ros_depends=(ros-hydro-map-server
   ros-hydro-stdr-server
