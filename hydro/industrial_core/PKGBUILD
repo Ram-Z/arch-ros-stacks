@@ -1,9 +1,9 @@
 
-pkgdesc="ROS - PCL (Point Cloud Library) ROS interface stack."
+pkgdesc="ROS - ROS-Industrial core stack contains packages and libraries for supporing industrial systems."
 url='http://www.ros.org/'
 
-pkgname='ros-hydro-perception-pcl'
-pkgver='1.1.7'
+pkgname='ros-hydro-industrial-core'
+pkgver='0.3.4'
 _pkgver_patch=0
 arch=('i686' 'x86_64')
 pkgrel=1
@@ -13,14 +13,18 @@ ros_makedepends=(ros-hydro-catkin)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]})
 
-ros_depends=(ros-hydro-pcl-msgs
-  ros-hydro-pcl-ros
-  ros-hydro-pcl-conversions)
+ros_depends=(ros-hydro-industrial-robot-simulator
+  ros-hydro-industrial-msgs
+  ros-hydro-simple-message
+  ros-hydro-industrial-robot-client
+  ros-hydro-industrial-deprecated
+  ros-hydro-industrial-utils
+  ros-hydro-industrial-trajectory-filters)
 depends=(${ros_depends[@]})
 
-_tag=release/hydro/perception_pcl/${pkgver}-${_pkgver_patch}
-_dir=perception_pcl
-source=("${_dir}"::"git+https://github.com/ros-gbp/perception_pcl-release.git"#tag=${_tag})
+_tag=release/hydro/industrial_core/${pkgver}-${_pkgver_patch}
+_dir=industrial_core
+source=("${_dir}"::"git+https://github.com/ros-industrial-release/industrial_core-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {

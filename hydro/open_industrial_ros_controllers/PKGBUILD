@@ -1,9 +1,9 @@
 
-pkgdesc="ROS - PCL (Point Cloud Library) ROS interface stack."
+pkgdesc="ROS - This package provides common functionality, especially plugin architecture for industrial robot controllers, much like the one in pr2_mechanism."
 url='http://www.ros.org/'
 
-pkgname='ros-hydro-perception-pcl'
-pkgver='1.1.7'
+pkgname='ros-hydro-open-industrial-ros-controllers'
+pkgver='0.1.4'
 _pkgver_patch=0
 arch=('i686' 'x86_64')
 pkgrel=1
@@ -13,14 +13,12 @@ ros_makedepends=(ros-hydro-catkin)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]})
 
-ros_depends=(ros-hydro-pcl-msgs
-  ros-hydro-pcl-ros
-  ros-hydro-pcl-conversions)
+ros_depends=(ros-hydro-open-controllers-interface)
 depends=(${ros_depends[@]})
 
-_tag=release/hydro/perception_pcl/${pkgver}-${_pkgver_patch}
-_dir=perception_pcl
-source=("${_dir}"::"git+https://github.com/ros-gbp/perception_pcl-release.git"#tag=${_tag})
+_tag=release/hydro/open_industrial_ros_controllers/${pkgver}-${_pkgver_patch}
+_dir=open_industrial_ros_controllers
+source=("${_dir}"::"git+https://github.com/start-jsk/open_industrial_ros_controllers-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {

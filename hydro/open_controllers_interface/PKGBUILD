@@ -1,26 +1,35 @@
 
-pkgdesc="ROS - PCL (Point Cloud Library) ROS interface stack."
+pkgdesc="ROS - This package provides generic capability for industrial controllers."
 url='http://www.ros.org/'
 
-pkgname='ros-hydro-perception-pcl'
-pkgver='1.1.7'
+pkgname='ros-hydro-open-controllers-interface'
+pkgver='0.1.4'
 _pkgver_patch=0
 arch=('i686' 'x86_64')
 pkgrel=1
 license=('BSD')
 
-ros_makedepends=(ros-hydro-catkin)
+ros_makedepends=(ros-hydro-realtime-tools
+  ros-hydro-roscpp
+  ros-hydro-catkin
+  ros-hydro-diagnostic-updater
+  ros-hydro-std-srvs
+  ros-hydro-pr2-controller-manager
+  ros-hydro-diagnostic-msgs)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]})
 
-ros_depends=(ros-hydro-pcl-msgs
-  ros-hydro-pcl-ros
-  ros-hydro-pcl-conversions)
+ros_depends=(ros-hydro-realtime-tools
+  ros-hydro-roscpp
+  ros-hydro-diagnostic-updater
+  ros-hydro-std-srvs
+  ros-hydro-pr2-controller-manager
+  ros-hydro-diagnostic-msgs)
 depends=(${ros_depends[@]})
 
-_tag=release/hydro/perception_pcl/${pkgver}-${_pkgver_patch}
-_dir=perception_pcl
-source=("${_dir}"::"git+https://github.com/ros-gbp/perception_pcl-release.git"#tag=${_tag})
+_tag=release/hydro/open_controllers_interface/${pkgver}-${_pkgver_patch}
+_dir=open_controllers_interface
+source=("${_dir}"::"git+https://github.com/start-jsk/open_industrial_ros_controllers-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
