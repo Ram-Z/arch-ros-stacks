@@ -11,6 +11,7 @@ import urlparse
 import yaml
 import re
 from collections import OrderedDict
+from termcolor import colored, cprint
 
 class PackageBase(object):
 
@@ -126,7 +127,12 @@ class PackageBase(object):
       rosdep_file = yaml.load(stream)
       for package_name, distrib in rosdep_file.items():
         if 'arch' in distrib:
-          dependency_map[package_name] = distrib["arch"]
+          if 'pacman' in distrib["arch"]:
+            dependency_map[package_name] = distrib["arch"]["pacman"]["packages"]
+          elif 'aur' in distrib["arch"]:
+            dependency_map[package_name] = distrib["arch"]["aur"]["packages"]
+          else:
+            dependency_map[package_name] = distrib["arch"]
     return dependency_map
 
   def generate(self, exclude_dependencies=[]):
@@ -366,7 +372,11 @@ class DistroDescription(object):
   def _get_package_data(self, name):
     """Searches for `name` in all known packages and metapackages."""
     if self._distro['repositories'].get(name):
-      return self._distro['repositories'][name]['release']
+      try:
+        return self._distro['repositories'][name]['release']
+      except KeyError, e:
+        print (colored("Missing %s branch for %s" % (e, name),
+                       'red', attrs=['bold']))
     else:
       for package in self.package_names():
         if (self._is_meta_package(package)
@@ -458,11 +468,15 @@ def generate_pkgbuild(distro, package, directory, force=False,
   pkgbuild_file = os.path.join(output_directory, 'PKGBUILD')
   if update:
     if package.is_same_version(pkgbuild_file):
-      print('PKGBUILD for package %s already up-to-date (%s-%s)'
-            % (package.name, package.version, package.version_patch))
+      print('PKGBUILD for package %s already up-to-date (%s)'
+            % (colored(package.name, 'yellow', attrs=['bold']),
+               colored(package.version + '-' + package.version_patch, 'white',
+                       attrs=['bold'])))
       return
-  print('Generating PKGBUILD for package %s (%s-%s)'
-        % (package.name, package.version, package.version_patch))
+  print('Generating PKGBUILD for package %s (%s)'
+        % (colored(package.name, 'green', attrs=['bold']),
+           colored(package.version + '-' + package.version_patch, 'white',
+                   attrs=['bold'])))
   with open(pkgbuild_file, 'w') as pkgbuild:
     pkgbuild.write(package.generate(exclude_dependencies, rosdep_urls))
 
