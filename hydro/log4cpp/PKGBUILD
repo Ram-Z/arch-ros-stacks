@@ -1,43 +1,24 @@
 
-pkgdesc="ROS - roscpp is a C++ implementation of ROS."
+pkgdesc="ROS - Log4cpp maintained by Orocos developers This version of log4cpp deviates from the official release by adding custom category factories."
 url='http://www.ros.org/'
 
-pkgname='ros-hydro-roscpp'
-pkgver='1.10.2'
+pkgname='ros-hydro-log4cpp'
+pkgver='2.7.0'
 _pkgver_patch=0
 arch=('i686' 'x86_64')
 pkgrel=1
-license=('BSD')
+license=('LGPL v2.1 or later')
 
-ros_makedepends=(ros-hydro-message-generation
-  ros-hydro-roslang
-  ros-hydro-xmlrpcpp
-  ros-hydro-rosconsole
-  ros-hydro-roscpp-serialization
-  ros-hydro-cpp-common
-  ros-hydro-rosgraph-msgs
-  ros-hydro-roscpp-traits
-  ros-hydro-catkin
-  ros-hydro-rostime
-  ros-hydro-std-msgs)
+ros_makedepends=()
 makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]}
-  pkg-config)
+  ${ros_makedepends[@]})
 
-ros_depends=(ros-hydro-xmlrpcpp
-  ros-hydro-rosconsole
-  ros-hydro-message-runtime
-  ros-hydro-roscpp-serialization
-  ros-hydro-cpp-common
-  ros-hydro-rosgraph-msgs
-  ros-hydro-roscpp-traits
-  ros-hydro-rostime
-  ros-hydro-std-msgs)
+ros_depends=(ros-hydro-catkin)
 depends=(${ros_depends[@]})
 
-_tag=release/hydro/roscpp/${pkgver}-${_pkgver_patch}
-_dir=roscpp
-source=("${_dir}"::"git+https://github.com/ros-gbp/ros_comm-release.git"#tag=${_tag})
+_tag=release/hydro/log4cpp/${pkgver}-${_pkgver_patch}
+_dir=log4cpp
+source=("${_dir}"::"git+https://github.com/orocos-gbp/log4cpp-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
