@@ -16,7 +16,7 @@ depends=(${ros_depends[@]}
   doxygen
   python2-yaml
   python2-sphinx
-  python-kitchen)
+  python2-kitchen)
 
 _tag=release/hydro/rosdoc_lite/${pkgver}-${_pkgver_patch}
 _dir=rosdoc_lite
