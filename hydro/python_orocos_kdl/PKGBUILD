@@ -12,7 +12,6 @@ license=('LGPL')
 ros_makedepends=(ros-hydro-orocos-kdl)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  sip
   python2-sip)
 
 ros_depends=(ros-hydro-catkin
