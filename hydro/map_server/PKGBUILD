@@ -6,7 +6,7 @@ pkgname='ros-hydro-map-server'
 pkgver='1.11.6'
 _pkgver_patch=1
 arch=('i686' 'x86_64')
-pkgrel=2
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(ros-hydro-tf
