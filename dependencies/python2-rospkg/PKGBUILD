@@ -5,7 +5,7 @@
 
 pkgname=python2-rospkg
 pkgver=1.0.19
-pkgrel=3
+pkgrel=4
 pkgdesc="ROS - provides basic utilities for querying information about ROS packages, stacks, and distributions."
 url="http://ros.org/doc/api/rospkg/html/python_api.html"
 arch=('any')
@@ -15,13 +15,21 @@ makedepends=('python2-distribute')
 conflicts=()
 replaces=()
 backup=()
-source=(http://pr.willowgarage.com/downloads/rospkg/rospkg-${pkgver}.tar.gz)
-md5sums=('3315b1b2129ec6844452a4eae752b9a5')
+source=(http://pr.willowgarage.com/downloads/rospkg/rospkg-${pkgver}.tar.gz
+        chakra.patch)
+md5sums=('3315b1b2129ec6844452a4eae752b9a5'
+         '73f51c0e2804b638aaf35ef343e8afd5')
+
+prepare() {
+  cd ${srcdir}/rospkg-${pkgver}
+  patch -p1 -i ${srcdir}/chakra.patch
+}
 
 build() {
   cd ${srcdir}/rospkg-${pkgver}
   find -type f -print0 | xargs -0 sed -i -e 's/#!\/usr\/bin\/env python/#!\/usr\/bin\/env python2/g'
 }
+
 package() {
   cd ${srcdir}/rospkg-${pkgver}
   python2 setup.py install --root="${pkgdir}" --optimize=1 || return 1
