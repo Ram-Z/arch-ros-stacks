@@ -16,7 +16,7 @@ makedepends=('cmake' 'git' 'ros-build-tools'
   python2-rospkg
   apache-ant
   python2-rosinstall-generator
-  jdk7-openjdk)
+  openjdk)
 
 ros_depends=(ros-hydro-rospy
   ros-hydro-catkin)
@@ -24,7 +24,7 @@ depends=(${ros_depends[@]}
   python2-rospkg
   apache-ant
   python2-rosinstall-generator
-  jdk7-openjdk)
+  openjdk)
 
 _tag=release/hydro/rosjava_build_tools/${pkgver}-${_pkgver_patch}
 _dir=rosjava_build_tools
