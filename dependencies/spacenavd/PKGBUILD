@@ -1,0 +1,28 @@
+# Maintainer: Samir Benmendil <ram-z[at]chakra-project[dot]org>
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
+# Contributor: Jan Hambrecht <jaham at gmx dot net>
+
+pkgname=spacenavd
+pkgver=0.5
+pkgrel=1
+pkgdesc="The spacenav project provides a free, compatible alternative, to the proprietary 3Dconnexion device driver and SDK, for their 3D input devices (called 'space navigator', 'space pilot', 'space traveller', etc)."
+arch=('i686' 'x86_64')
+url="http://spacenav.sourceforge.net/"
+license=('GPL')
+optdepends=("libx11")
+provides=('spacenavd')
+backup=('etc/spnavrc')
+install=
+source=(http://downloads.sourceforge.net/spacenav/$pkgname-$pkgver.tar.gz)
+md5sums=('0bb21da5315bd376aa508157a9455aaa')
+
+build() {
+  cd $srcdir/$pkgname-$pkgver
+  ./configure --prefix=$pkgdir/usr
+  make
+}
+
+package() {
+  cd $srcdir/$pkgname-$pkgver
+  make DESTDIR=$pkgdir install
+}
