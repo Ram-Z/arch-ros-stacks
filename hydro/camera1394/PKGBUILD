@@ -1,43 +1,46 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Contains nodelets for processing depth images such as those produced by OpenNI camera."
+pkgdesc="ROS - ROS driver for devices supporting the IEEE 1394 Digital Camera (IIDC) protocol."
 url='http://www.ros.org/'
 
-pkgname='ros-hydro-depth-image-proc'
-pkgver='1.11.8'
+pkgname='ros-hydro-camera1394'
+pkgver='1.9.4'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('LGPL')
 
-ros_makedepends=(ros-hydro-message-filters
-  ros-hydro-cv-bridge
+ros_makedepends=(ros-hydro-camera-info-manager
   ros-hydro-sensor-msgs
   ros-hydro-nodelet
-  ros-hydro-image-geometry
+  ros-hydro-diagnostic-updater
   ros-hydro-image-transport
+  ros-hydro-roscpp
   ros-hydro-catkin
   ros-hydro-tf
-  ros-hydro-stereo-msgs
-  ros-hydro-pcl-ros
-  ros-hydro-pcl-conversions)
+  ros-hydro-dynamic-reconfigure
+  ros-hydro-driver-base
+  ros-hydro-rostest)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
   boost
-  eigen3)
+  libdc1394)
 
-ros_depends=(ros-hydro-cv-bridge
+ros_depends=(ros-hydro-sensor-msgs
   ros-hydro-nodelet
-  ros-hydro-image-geometry
+  ros-hydro-diagnostic-updater
   ros-hydro-image-transport
+  ros-hydro-roscpp
   ros-hydro-tf
-  ros-hydro-pcl-ros)
+  ros-hydro-dynamic-reconfigure
+  ros-hydro-camera-info-manager)
 depends=(${ros_depends[@]}
-  boost)
+  boost
+  libdc1394)
 
-_tag=release/hydro/depth_image_proc/${pkgver}-${_pkgver_patch}
-_dir=depth_image_proc
-source=("${_dir}"::"git+https://github.com/ros-gbp/image_pipeline-release.git"#tag=${_tag})
+_tag=release/hydro/camera1394/${pkgver}-${_pkgver_patch}
+_dir=camera1394
+source=("${_dir}"::"git+https://github.com/ros-drivers-gbp/camera1394-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
