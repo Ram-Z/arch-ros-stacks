@@ -6,7 +6,7 @@ pkgname='ros-hydro-mr-rqt'
 pkgver='0.2.6'
 _pkgver_patch=1
 arch=('i686' 'x86_64')
-pkgrel=1
+pkgrel=2
 license=('MIT')
 
 ros_makedepends=(ros-hydro-rqt-gui-cpp
