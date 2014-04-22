@@ -36,7 +36,7 @@ ros_makedepends=(ros-hydro-rosconsole
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
   gazebo
-  ogre-1.8
+  ogre
   cegui-0.7-ogre)
 
 ros_depends=(ros-hydro-rosconsole
