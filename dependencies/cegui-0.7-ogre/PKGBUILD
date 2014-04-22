@@ -14,8 +14,8 @@ pkgdesc="A free library providing windowing and widgets for graphics APIs/engine
 arch=('i686' 'x86_64')
 url="http://crayzedsgui.sourceforge.net"
 license=("MIT")
-depends=('glew' 'freetype2' 'libxml2' 'devil' 'freeglut' 'lua51' 'silly' 'mesa' 'glm' 'glfw' 'ogre-1.8')
-makedepends=('python2' 'doxygen' 'gtk2' 'boost' 'graphviz' 'ogre-1.8') # 'irrlicht')
+depends=('glew' 'freetype2' 'libxml2' 'devil' 'freeglut' 'lua' 'silly' 'mesa' 'glm' 'glfw' 'ogre')
+makedepends=('python2' 'doxygen' 'gtk2' 'boost' 'graphviz' 'ogre') # 'irrlicht')
 optdepends=("python2: python bindings"
             "boost-libs: null renderer with python2"
             #"irrlicht: irrlicht module"
