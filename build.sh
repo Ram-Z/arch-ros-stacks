@@ -54,6 +54,7 @@ for pkgname in ${sorted[@]}; do
     pkgdest=$(get_pkgdest)
     retcode=0
     if [[ ! -e ignore ]]; then
+        pkgs=( $(ls --reverse *.pkg.tar.xz) )
         if [[ "$pkgname $ver" == "$(pacman -Q $pkgname 2>/dev/null)" ]]; then
             msg "$pkgname-$ver uptodate!"
         elif [[ -z $(find $pkgdest -maxdepth 1 -name "$pkgname-*$ver*" -print -quit) ]]; then
@@ -61,9 +62,11 @@ for pkgname in ${sorted[@]}; do
             makepkg -si --asdeps --noconfirm
         elif [[ -z $(pacman -Qq $pkgname 2> /dev/null) ]]; then
             msg "Installing $pkgname"
-            sudo pacman -U --noconfirm --asdeps *.pkg.tar.xz
+            sudo pacman -U --noconfirm --asdeps ${pkgs[0]}
         fi
         retcode=$?
+        # remove old pkgs
+        [[ -n "${pkgs[@]:1}" ]] && rm ${pkgs[@]:1}
     fi
     popd > /dev/null
     [[ $retcode -ne 0 ]] && exit $retcode
