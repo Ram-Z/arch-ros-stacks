@@ -1,34 +1,40 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Provides conversions from PCL data types and ROS message types."
-url='http://www.ros.org/'
+pkgdesc="ROS - hector_compressed_map_transport provides means for transporting compressed map data through the use of image_transport."
+url='http://ros.org/wiki/hector_compressed_map_transport'
 
-pkgname='ros-hydro-pcl-conversions'
-pkgver='0.1.6'
+pkgname='ros-hydro-hector-compressed-map-transport'
+pkgver='0.3.2'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
 license=('BSD')
 
-ros_makedepends=(ros-hydro-catkin
-  ros-hydro-roscpp
+ros_makedepends=(ros-hydro-cv-bridge
   ros-hydro-sensor-msgs
-  ros-hydro-pcl-msgs
-  ros-hydro-std-msgs)
+  ros-hydro-image-transport
+  ros-hydro-catkin
+  ros-hydro-geometry-msgs
+  ros-hydro-opencv2
+  ros-hydro-nav-msgs
+  ros-hydro-hector-map-tools)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  'pcl>=1.7')
+  eigen3)
 
-ros_depends=(ros-hydro-roscpp
+ros_depends=(ros-hydro-cv-bridge
   ros-hydro-sensor-msgs
-  ros-hydro-pcl-msgs
-  ros-hydro-std-msgs)
+  ros-hydro-image-transport
+  ros-hydro-geometry-msgs
+  ros-hydro-opencv2
+  ros-hydro-nav-msgs
+  ros-hydro-hector-map-tools)
 depends=(${ros_depends[@]}
-  'pcl>=1.7')
+  eigen3)
 
-_tag=release/hydro/pcl_conversions/${pkgver}-${_pkgver_patch}
-_dir=pcl_conversions
-source=("${_dir}"::"git+https://github.com/ros-gbp/pcl_conversions-release.git"#tag=${_tag})
+_tag=release/hydro/hector_compressed_map_transport/${pkgver}-${_pkgver_patch}
+_dir=hector_compressed_map_transport
+source=("${_dir}"::"git+https://github.com/tu-darmstadt-ros-pkg-gbp/hector_slam-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
