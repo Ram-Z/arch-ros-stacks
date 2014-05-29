@@ -18,8 +18,8 @@ ros_depends=(ros-hydro-rospy
   ros-hydro-rostest)
 depends=(${ros_depends[@]}
   mongodb
-  mongo-cxx-driver-legacy-0.0-26compat
   curl)
+  # mongo-cxx-driver-legacy-0.0-26compat
 
 _tag=release/hydro/warehouse_ros/${pkgver}-${_pkgver_patch}
 _dir=warehouse_ros

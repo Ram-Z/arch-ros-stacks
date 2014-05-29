@@ -1,0 +1,24 @@
+# Maintainer: Samir Benmendil <ram-z[at]chakra-project[dot]org>
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
+# Contributer: Nicolas Martyanoff <khaelin@gmail.com>
+
+pkgname=lksctp-tools
+pkgver=1.0.11
+pkgrel=1
+pkgdesc="An implementation of the SCTP protocol"
+arch=('i686' 'x86_64')
+url="http://lksctp.sourceforge.net/"
+license=('GPL')
+source=("http://downloads.sourceforge.net/sourceforge/lksctp/${pkgname}-${pkgver}.tar.gz")
+md5sums=('e9cf6c57402c9d4f1173a9529466e16d')
+
+build() {
+  cd "$srcdir"/${pkgname}-${pkgver}
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir"/${pkgname}-${pkgver}
+  make DESTDIR="$pkgdir" install
+}

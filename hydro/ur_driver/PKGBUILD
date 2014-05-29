@@ -20,7 +20,7 @@ ros_depends=(ros-hydro-rospy
   ros-hydro-control-msgs
   ros-hydro-actionlib)
 depends=(${ros_depends[@]}
-  python2-beautifulsoup3)
+  python2-beautifulsoup)
 
 _tag=release/hydro/ur_driver/${pkgver}-${_pkgver_patch}
 _dir=ur_driver
