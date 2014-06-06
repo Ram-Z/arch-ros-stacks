@@ -4,8 +4,8 @@
 # Maintainer: Sean Greenslade <zootboysean@gmail.com>
 
 pkgname=python2-rospkg
-pkgver=1.0.19
-pkgrel=4
+pkgver=1.0.28
+pkgrel=1
 pkgdesc="ROS - provides basic utilities for querying information about ROS packages, stacks, and distributions."
 url="http://ros.org/doc/api/rospkg/html/python_api.html"
 arch=('any')
