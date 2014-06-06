@@ -49,7 +49,7 @@ for pkgname in ${sorted[@]}; do
     ver=$(get_version ./PKGBUILD)
     retcode=0
     if [[ ! -e ignore ]]; then
-        pkgs=( $(ls --reverse *$pkgext) )
+        pkgs=( $(ls --reverse *$pkgext 2> /dev/null) )
         if [[ "$pkgname $ver" == "$(pacman -Q $pkgname 2>/dev/null)" ]]; then
             msg "$pkgname-$ver uptodate!"
         elif [[ -z $(find $pkgdest -maxdepth 1 -name "$pkgname-*$ver*$pkgext" -print -quit) ]]; then
