@@ -17,7 +17,7 @@ replaces=()
 backup=()
 source=(http://pr.willowgarage.com/downloads/rospkg/rospkg-${pkgver}.tar.gz
         chakra.patch)
-md5sums=('3315b1b2129ec6844452a4eae752b9a5'
+md5sums=('16d44fb29c494e8609c8c86fc4e75f4d'
          '73f51c0e2804b638aaf35ef343e8afd5')
 
 prepare() {
