@@ -9,8 +9,10 @@ depends=('python3')
 makedepends=('python3')
 license=('BSD')
 arch=('any')
-source=("https://pypi.python.org/packages/source/r/rospkg/rospkg-$pkgver.tar.gz")
-md5sums=('16d44fb29c494e8609c8c86fc4e75f4d')
+source=("https://pypi.python.org/packages/source/r/rospkg/rospkg-$pkgver.tar.gz"
+        "chakra.patch")
+md5sums=('16d44fb29c494e8609c8c86fc4e75f4d'
+         '73f51c0e2804b638aaf35ef343e8afd5')
 conflicts=(python2-rospkg)
 
 # This is not ideal, but should not break Groovy/Hydro dependencies for now...

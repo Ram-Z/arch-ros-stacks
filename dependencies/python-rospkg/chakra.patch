@@ -1,0 +1,46 @@
+diff -ru rospkg-1.0.19.orig/src/rospkg/os_detect.py rospkg-1.0.19/src/rospkg/os_detect.py
+--- rospkg-1.0.19.orig/src/rospkg/os_detect.py	2014-03-26 15:44:52.029071633 +0000
++++ rospkg-1.0.19/src/rospkg/os_detect.py	2014-03-26 15:49:20.551021475 +0000
+@@ -251,6 +251,26 @@
+             return _read_stdout([self._sw_vers_file,'-productVersion']).strip()
+         raise OsNotDetected('called in incorrect OS')
+ 
++class Chakra(OsDetector):
++    """
++    Detect Chakra Linux.
++    """
++    def __init__(self, release_file='/etc/chakra-release'):
++        self._release_file = release_file
++
++    def is_os(self):
++        return os.path.exists(self._release_file)
++
++    def get_version(self):
++        if self.is_os():
++            return ""
++        raise OsNotDetected('called in incorrect OS')        
++
++    def get_codename(self):
++        if self.is_os():
++            return ""
++        raise OsNotDetected('called in incorrect OS')        
++
+ class Arch(OsDetector):
+     """
+     Detect Arch Linux.
+@@ -444,6 +464,7 @@
+         return self._os_codename
+ 
+ OS_ARCH='arch'
++OS_CHAKRA='chakra'
+ OS_CYGWIN='cygwin'
+ OS_DEBIAN='debian'
+ OS_FEDORA='fedora'
+@@ -456,6 +477,7 @@
+ OS_UBUNTU='ubuntu'
+ 
+ OsDetect.register_default(OS_ARCH, Arch())
++OsDetect.register_default(OS_CHAKRA, Chakra())
+ OsDetect.register_default(OS_CYGWIN, Cygwin())
+ OsDetect.register_default(OS_DEBIAN, LsbDetect("debian"))
+ OsDetect.register_default(OS_FEDORA, Fedora())
