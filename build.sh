@@ -50,15 +50,7 @@ for pkgname in ${sorted[@]}; do
     retcode=0
     if [[ ! -e ignore ]]; then
         pkgs=( $(ls --reverse *$pkgext 2> /dev/null) )
-        if [[ "$pkgname $ver" == "$(pacman -Q $pkgname 2>/dev/null)" ]]; then
-            msg "$pkgname-$ver uptodate!"
-        elif [[ -z $(find $pkgdest -maxdepth 1 -name "$pkgname-*$ver*$pkgext" -print -quit) ]]; then
-            msg "Building $pkgname"
-            makepkg -si --asdeps --noconfirm
-        elif [[ -z $(pacman -Qq $pkgname 2> /dev/null) ]]; then
-            msg "Installing $pkgname"
-            sudo pacman -U --noconfirm --asdeps ${pkgs[0]}
-        fi
+        makepkg -si --asdeps --noconfirm --needed
         retcode=$?
         # remove old pkgs
         [[ -n "${pkgs[@]:1}" ]] && rm ${pkgs[@]:1}
