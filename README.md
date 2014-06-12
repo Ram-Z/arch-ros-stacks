@@ -7,6 +7,10 @@ I am maintaining Hydro packages for Chakra Linux. They have not been uploaded to
 
 \<ram-z[at]chakra-project[dot]org\>
 
+### Python version
+
+Starting with Indigo, Python 3 support is added to ROS. However, since most non-core packages are not Python 3 ready yet, we will continue using Python 2 for Indigo.
+
 ### How to contribute
 
 If you want to contribute, please do so on [bchretien](https://github.com/bchretien/arch-ros-stacks)'s repo, I will then merge the changes into this repo.
