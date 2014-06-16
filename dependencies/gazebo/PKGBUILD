@@ -31,9 +31,6 @@ build() {
   # Create build directory
   mkdir -p build && cd build
 
-  # Adapt paths for Ogre 1.8
-  export PKG_CONFIG_PATH="/opt/OGRE-1.8/lib/pkgconfig:$PKG_CONFIG_PATH"
-
   # Run CMake. We skip unit tests.
   cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
            -DENABLE_TESTS_COMPILATION:BOOL=False
