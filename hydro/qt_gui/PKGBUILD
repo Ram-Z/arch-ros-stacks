@@ -12,7 +12,7 @@ license=('BSD')
 ros_makedepends=(ros-hydro-catkin)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  python2-pyqt4-10
+  python2-pyqt4
   qt4)
 
 ros_depends=(ros-hydro-python-qt-binding)
