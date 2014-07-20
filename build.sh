@@ -29,8 +29,46 @@ msg()
     printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
 }
 
+usage()
+{
+    echo "usage: $(basename "$0") [option] rosdistro"
+    echo
+    echo "    --force - force rebuilding all packages"
+    exit
+}
+
+# Argument parsing
+packageargs=()
+while [[ $1 ]]; do
+    case "$1" in
+        '--force'|'-f') force='1' ;;
+        # '--ignore') ignorearg="$2" ; PACOPTS+=("--ignore" "$2") ; shift ;;
+        # '--') shift ; packageargs+=("$@") ; break ;;
+        -*) echo "$0: Option \`$1' is not valid." ; exit 5 ;;
+        groovy*) dir="groovy" ;;
+        hydro*)  dir="hydro"  ;;
+        indigo*) dir="indigo" ;;
+    esac
+    shift
+done
+[[ $dir ]] || usage
+
+makepkgopts+=("--asdeps" "--noconfirm")
+# [[ $force ]] && makepkgopts+=("--force") || makepkgopts+=("--needed")
+[[ $force ]] || makepkgopts+=("--needed")
+
+#TODO tsort deps
+# dependencies=$(find "./dependencies" -name PKGBUILD)
+# for dependency in ${dependencies[@]}; do
+#     pushd "${dependency%/*}" > /dev/null
+#     source <(get_pkgbuild PKGBUILD)
+#     makepkg -si "${makepkgopts[@]}"
+#     retcode=$?
+#     popd > /dev/null
+#     [[ $retcode -ne 0 ]] && exit $retcode
+# done
+
 tmp=$(mktemp)
-dir=${1-:.}
 pkgbuilds=$(find "$dir" -name PKGBUILD)
 for pkgbuild in ${pkgbuilds[@]}; do
     source <(get_pkgbuild $pkgbuild)
@@ -50,7 +88,7 @@ for pkgname in ${sorted[@]}; do
     retcode=0
     if [[ ! -e ignore ]]; then
         pkgs=( $(ls --reverse *$pkgext 2> /dev/null) )
-        makepkg -si --asdeps --noconfirm --needed
+        makepkg -si "${makepkgopts[@]}"
         retcode=$?
         # remove old pkgs
         [[ -n "${pkgs[@]:1}" ]] && rm ${pkgs[@]:1}
