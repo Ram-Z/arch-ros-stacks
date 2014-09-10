@@ -30,14 +30,44 @@ msg()
 }
 
 tmp=$(mktemp)
-dir=${1-:.}
-pkgbuilds=$(find "$dir" -name PKGBUILD)
-for pkgbuild in ${pkgbuilds[@]}; do
-    source <(get_pkgbuild $pkgbuild)
-    for depend in ${depends[@]}; do
-        printf "%s %s\n" "$depend" "$pkgname" >> $tmp
+
+get_all()
+{
+    echo $(find "$dir" -name PKGBUILD)
+}
+
+get_depends()
+{
+    for pkgbuild in ${@}; do
+        source <(get_pkgbuild $pkgbuild)
+        for depend in ${depends[@]}; do
+            printf "%s %s\n" "$depend" "$pkgname" >> $tmp
+        done
     done
-done
+}
+
+get_from_list()
+{
+    if [[ $# -gt 0 ]]; then
+        local pkgs=( $@ )
+        dir=${pkgs[0]#ros-}; dir=${dir%%-*}
+        local pkgnames=${pkgs[@]#ros-$dir-}
+        pkgnames=${pkgnames[@]//-/_}
+        for pkg in ${pkgnames[@]}; do
+            echo $dir/$pkg/PKGBUILD
+        done
+    fi
+}
+
+case $1 in
+    "")     dir=hydro; pkgbuilds=( $(get_all) ) ;;
+    groovy) dir=$1;    pkgbuilds=( $(get_all) ) ;;
+    hydro)  dir=$1;    pkgbuilds=( $(get_all) ) ;;
+    indigo) dir=$1;    pkgbuilds=( $(get_all) ) ;;
+    *)      pkgbuilds=( $(get_from_list $@) ) ;;
+esac
+
+get_depends ${pkgbuilds[@]}
 
 sorted=( $(tsort $tmp) )
 
