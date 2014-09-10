@@ -22,7 +22,7 @@ ros_depends=(ros-hydro-rospy
   ros-hydro-visualization-msgs
   ros-hydro-rostest)
 depends=(${ros_depends[@]}
-  python2-scipy
+  python-scipy
   python2-matplotlib
   tk
   python2)

@@ -29,21 +29,9 @@ msg()
     printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
 }
 
-tmp=$(mktemp)
-
 get_all()
 {
-    echo $(find "$dir" -name PKGBUILD)
-}
-
-get_depends()
-{
-    for pkgbuild in ${@}; do
-        source <(get_pkgbuild $pkgbuild)
-        for depend in ${depends[@]}; do
-            printf "%s %s\n" "$depend" "$pkgname" >> $tmp
-        done
-    done
+    echo $(find "$1" -name PKGBUILD)
 }
 
 get_from_list()
@@ -59,17 +47,68 @@ get_from_list()
     fi
 }
 
-case $1 in
-    "")     dir=hydro; pkgbuilds=( $(get_all) ) ;;
-    groovy) dir=$1;    pkgbuilds=( $(get_all) ) ;;
-    hydro)  dir=$1;    pkgbuilds=( $(get_all) ) ;;
-    indigo) dir=$1;    pkgbuilds=( $(get_all) ) ;;
-    *)      pkgbuilds=( $(get_from_list $@) ) ;;
-esac
+get_depends()
+{
+    for pkgbuild in ${@}; do
+        source <(get_pkgbuild $pkgbuild)
+        for depend in ${depends[@]}; do
+            printf "%s %s\n" "$depend" "$pkgname" >> $tmp
+        done
+    done
+}
 
+usage()
+{
+    echo "usage: $(basename "$0") [option] rosdistro"
+    echo
+    echo "    --force - force rebuilding all packages"
+    exit
+}
+
+# Argument parsing
+packageargs=()
+pkgargs=()
+while [[ $1 ]]; do
+    case "$1" in
+        '--force'|'-f') force='1' ;;
+        # '--ignore') ignorearg="$2" ; PACOPTS+=("--ignore" "$2") ; shift ;;
+        # '--') shift ; packageargs+=("$@") ; break ;;
+        -*) echo "$0: Option \`$1' is not valid." ; exit 5 ;;
+        groovy*) dir="groovy" ;;
+        hydro*)  dir="hydro"  ;;
+        indigo*) dir="indigo" ;;
+        *) pkgargs+=($1) ;;
+    esac
+    shift
+done
+
+if [[ $dir ]]; then
+    pkgbuilds=( $(get_all $dir) )
+elif [[ ${#pkgargs[@]} -gt 0 ]]; then
+    pkgbuilds=( $(get_from_list ${pkgargs[@]}) )
+    dir=${pkgbuilds[0]%%/*}
+else
+    usage
+fi
+
+tmp=$(mktemp)
 get_depends ${pkgbuilds[@]}
-
 sorted=( $(tsort $tmp) )
+
+makepkgopts+=("--asdeps" "--noconfirm")
+# [[ $force ]] && makepkgopts+=("--force") || makepkgopts+=("--needed")
+[[ $force ]] || makepkgopts+=("--needed")
+
+#TODO tsort deps
+# dependencies=$(find "./dependencies" -name PKGBUILD)
+# for dependency in ${dependencies[@]}; do
+#     pushd "${dependency%/*}" > /dev/null
+#     source <(get_pkgbuild PKGBUILD)
+#     makepkg -si "${makepkgopts[@]}"
+#     retcode=$?
+#     popd > /dev/null
+#     [[ $retcode -ne 0 ]] && exit $retcode
+# done
 
 source <(get_makepkg_conf)
 for pkgname in ${sorted[@]}; do
@@ -80,7 +119,7 @@ for pkgname in ${sorted[@]}; do
     retcode=0
     if [[ ! -e ignore ]]; then
         pkgs=( $(ls --reverse *$pkgext 2> /dev/null) )
-        makepkg -si --asdeps --noconfirm --needed
+        makepkg -si "${makepkgopts[@]}"
         retcode=$?
         # remove old pkgs
         [[ -n "${pkgs[@]:1}" ]] && rm ${pkgs[@]:1}

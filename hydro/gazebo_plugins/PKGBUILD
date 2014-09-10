@@ -36,7 +36,7 @@ ros_makedepends=(ros-hydro-rosconsole
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
   gazebo
-  ogre
+  ogre-1.8
   cegui-0.7-ogre)
 
 ros_depends=(ros-hydro-rosconsole
@@ -63,7 +63,7 @@ ros_depends=(ros-hydro-rosconsole
   ros-hydro-pcl-ros)
 depends=(${ros_depends[@]}
   gazebo
-  ogre)
+  ogre-1.8)
 
 _tag=release/hydro/gazebo_plugins/${pkgver}-${_pkgver_patch}
 _dir=gazebo_plugins
