@@ -29,6 +29,34 @@ msg()
     printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
 }
 
+get_all()
+{
+    echo $(find "$1" -name PKGBUILD)
+}
+
+get_from_list()
+{
+    if [[ $# -gt 0 ]]; then
+        local pkgs=( $@ )
+        dir=${pkgs[0]#ros-}; dir=${dir%%-*}
+        local pkgnames=${pkgs[@]#ros-$dir-}
+        pkgnames=${pkgnames[@]//-/_}
+        for pkg in ${pkgnames[@]}; do
+            echo $dir/$pkg/PKGBUILD
+        done
+    fi
+}
+
+get_depends()
+{
+    for pkgbuild in ${@}; do
+        source <(get_pkgbuild $pkgbuild)
+        for depend in ${depends[@]}; do
+            printf "%s %s\n" "$depend" "$pkgname" >> $tmp
+        done
+    done
+}
+
 usage()
 {
     echo "usage: $(basename "$0") [option] rosdistro"
@@ -39,6 +67,7 @@ usage()
 
 # Argument parsing
 packageargs=()
+pkgargs=()
 while [[ $1 ]]; do
     case "$1" in
         '--force'|'-f') force='1' ;;
@@ -48,10 +77,23 @@ while [[ $1 ]]; do
         groovy*) dir="groovy" ;;
         hydro*)  dir="hydro"  ;;
         indigo*) dir="indigo" ;;
+        *) pkgargs+=($1) ;;
     esac
     shift
 done
-[[ $dir ]] || usage
+
+if [[ $dir ]]; then
+    pkgbuilds=( $(get_all $dir) )
+elif [[ ${#pkgargs[@]} -gt 0 ]]; then
+    pkgbuilds=( $(get_from_list ${pkgargs[@]}) )
+    dir=${pkgbuilds[0]%%/*}
+else
+    usage
+fi
+
+tmp=$(mktemp)
+get_depends ${pkgbuilds[@]}
+sorted=( $(tsort $tmp) )
 
 makepkgopts+=("--asdeps" "--noconfirm")
 # [[ $force ]] && makepkgopts+=("--force") || makepkgopts+=("--needed")
@@ -67,17 +109,6 @@ makepkgopts+=("--asdeps" "--noconfirm")
 #     popd > /dev/null
 #     [[ $retcode -ne 0 ]] && exit $retcode
 # done
-
-tmp=$(mktemp)
-pkgbuilds=$(find "$dir" -name PKGBUILD)
-for pkgbuild in ${pkgbuilds[@]}; do
-    source <(get_pkgbuild $pkgbuild)
-    for depend in ${depends[@]}; do
-        printf "%s %s\n" "$depend" "$pkgname" >> $tmp
-    done
-done
-
-sorted=( $(tsort $tmp) )
 
 source <(get_makepkg_conf)
 for pkgname in ${sorted[@]}; do
