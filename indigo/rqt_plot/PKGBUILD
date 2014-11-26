@@ -22,7 +22,7 @@ ros_depends=(ros-indigo-rqt-gui
   ros-indigo-qt-gui-py-common)
 depends=(${ros_depends[@]}
   python2-rospkg
-  pyqwt
+  python2-pyqwt
   python2-matplotlib)
 
 _tag=release/indigo/rqt_plot/${pkgver}-${_pkgver_patch}

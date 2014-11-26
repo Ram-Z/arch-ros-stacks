@@ -20,7 +20,7 @@ makedepends=('cmake' 'git' 'ros-build-tools'
   linuxconsole
   bluez
   libusb-compat
-  python2-pybluez)
+  python-pybluez)
 
 ros_depends=(ros-indigo-rosgraph
   ros-indigo-rospy
@@ -30,7 +30,7 @@ depends=(${ros_depends[@]}
   linuxconsole
   bluez
   libusb-compat
-  python2-pybluez)
+  python-pybluez)
 
 _tag=release/indigo/ps3joy/${pkgver}-${_pkgver_patch}
 _dir=ps3joy

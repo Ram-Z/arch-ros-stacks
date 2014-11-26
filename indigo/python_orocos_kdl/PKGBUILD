@@ -13,13 +13,11 @@ license=('LGPL')
 ros_makedepends=(ros-indigo-orocos-kdl)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  sip
   python2-sip)
 
 ros_depends=(ros-indigo-orocos-kdl
   ros-indigo-catkin)
 depends=(${ros_depends[@]}
-  sip
   python2-sip)
 
 _tag=release/indigo/python_orocos_kdl/${pkgver}-${_pkgver_patch}
