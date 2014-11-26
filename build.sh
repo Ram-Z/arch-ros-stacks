@@ -40,7 +40,7 @@ get_from_list()
         local pkgs=( $@ )
         dir=${pkgs[0]#ros-}; dir=${dir%%-*}
         local pkgnames=${pkgs[@]#ros-$dir-}
-        pkgnames=${pkgnames[@]//-/_}
+        pkgnames=${pkgnames//-/_}
         for pkg in ${pkgnames[@]}; do
             echo $dir/$pkg/PKGBUILD
         done
@@ -112,7 +112,7 @@ makepkgopts+=("--asdeps" "--noconfirm")
 
 source <(get_makepkg_conf)
 for pkgname in ${sorted[@]}; do
-    pkgdir=${pkgname#ros-hydro-}
+    pkgdir=${pkgname#ros-$dir-}
     pkgdir=${pkgdir//-/_}
     pushd "$dir"/$pkgdir > /dev/null
     ver=$(get_version ./PKGBUILD)
