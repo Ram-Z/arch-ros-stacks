@@ -1,26 +1,32 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Packages for interfacing ROS with OpenCV, a library of programming functions for real time computer vision."
-url='http://www.ros.org/wiki/vision_opencv'
+pkgdesc="ROS - Provides service calls for getting ros meta-information, like list of topics, services, params, etc."
+url='http://ros.org/wiki/rosapi'
 
-pkgname='ros-indigo-vision-opencv'
-pkgver='1.11.6'
+pkgname='ros-indigo-rosapi'
+pkgver='0.6.8'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
 license=('BSD')
 
-ros_makedepends=(ros-indigo-catkin)
+ros_makedepends=(ros-indigo-rosbridge-library
+  ros-indigo-catkin
+  ros-indigo-rospy
+  ros-indigo-message-generation)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]})
 
-ros_depends=(ros-indigo-image-geometry
-  ros-indigo-cv-bridge)
+ros_depends=(ros-indigo-rosbridge-library
+  ros-indigo-rosnode
+  ros-indigo-rosgraph
+  ros-indigo-message-runtime
+  ros-indigo-rospy)
 depends=(${ros_depends[@]})
 
-_tag=release/indigo/vision_opencv/${pkgver}-${_pkgver_patch}
-_dir=vision_opencv
-source=("${_dir}"::"git+https://github.com/ros-gbp/vision_opencv-release.git"#tag=${_tag})
+_tag=release/indigo/rosapi/${pkgver}-${_pkgver_patch}
+_dir=rosapi
+source=("${_dir}"::"git+https://github.com/RobotWebTools-release/rosbridge_suite-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {

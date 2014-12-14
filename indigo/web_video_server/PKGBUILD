@@ -1,26 +1,34 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Packages for interfacing ROS with OpenCV, a library of programming functions for real time computer vision."
-url='http://www.ros.org/wiki/vision_opencv'
+pkgdesc="ROS - A ROS Node to Stream Image Topics Via a MJPEG Server."
+url='http://ros.org/wiki/web_video_server'
 
-pkgname='ros-indigo-vision-opencv'
-pkgver='1.11.6'
+pkgname='ros-indigo-web-video-server'
+pkgver='0.0.1'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
 license=('BSD')
 
-ros_makedepends=(ros-indigo-catkin)
-makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]})
-
-ros_depends=(ros-indigo-image-geometry
+ros_makedepends=(ros-indigo-roslib
+  ros-indigo-image-transport
+  ros-indigo-catkin
+  ros-indigo-roscpp
   ros-indigo-cv-bridge)
-depends=(${ros_depends[@]})
+makedepends=('cmake' 'git' 'ros-build-tools'
+  ${ros_makedepends[@]}
+  ffmpeg)
 
-_tag=release/indigo/vision_opencv/${pkgver}-${_pkgver_patch}
-_dir=vision_opencv
-source=("${_dir}"::"git+https://github.com/ros-gbp/vision_opencv-release.git"#tag=${_tag})
+ros_depends=(ros-indigo-roslib
+  ros-indigo-image-transport
+  ros-indigo-roscpp
+  ros-indigo-cv-bridge)
+depends=(${ros_depends[@]}
+  ffmpeg)
+
+_tag=release/indigo/web_video_server/${pkgver}-${_pkgver_patch}
+_dir=web_video_server
+source=("${_dir}"::"git+https://github.com/RobotWebTools-release/web_video_server-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
