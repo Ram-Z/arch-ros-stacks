@@ -9,6 +9,7 @@ pkgdesc="Open source SDK used for the development of 3D sensing middleware libra
 arch=('i686' 'x86_64')
 url="http://www.openni.org/"
 license=('Apache')
+depends=('glu')
 makedepends=(doxygen openjdk freeglut)
 source=(https://github.com/OpenNI/OpenNI2/archive/${_pkgver}.tar.gz
         libopenni2.pc)
@@ -28,6 +29,12 @@ _cfg=Release
 prepare() {
   cd "${srcdir}/OpenNI2-${_pkgver}"
   sed -i s%-mfloat-abi=softfp%% ThirdParty/PSCommon/BuildSystem/Platform.Arm
+
+    # https://github.com/OpenNI/OpenNI2/issues/87
+  if [[ `java -version 2>&1` == *1.8* ]]
+  then
+    sed -i "s/cmd = \[javaDocExe, '-d', 'java'\]/cmd = [javaDocExe, '-d', 'java', '-Xdoclint:none']/" Source/Documentation/Runme.py
+  fi
 }
 
 build() {
