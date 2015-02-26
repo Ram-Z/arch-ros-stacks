@@ -1,0 +1,24 @@
+--- ./gazebo/transport/Connection.cc.orig       2014-02-23 18:58:35.226997266 +0400
++++ ./gazebo/transport/Connection.cc    2014-02-23 19:02:49.123645564 +0400
+@@ -842,6 +842,8 @@ void Connection::OnConnect(const boost::
+     this->remoteURI = std::string("http://") + this->GetRemoteHostname()
+       + ":" + boost::lexical_cast<std::string>(this->GetRemotePort());
+
++    try
++    {
+     if (this->socket && this->socket->is_open())
+     {
+       this->remoteAddress =
+@@ -852,6 +854,12 @@ void Connection::OnConnect(const boost::
+       this->connectError = true;
+       gzerr << "Invalid socket connection\n";
+     }
++    }
++    catch (std::exception& e)
++    {
++      this->connectError = true;
++      gzerr << "Error handling socket connection: " << e.what() << "\n";
++    }
+
+     // Notify the condition that it may proceed.
+     this->connectCondition.notify_one();
