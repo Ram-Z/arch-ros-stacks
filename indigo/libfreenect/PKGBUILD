@@ -1,29 +1,33 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - actionlib_msgs defines the common messages to interact with an action server and an action client."
-url='http://ros.org/wiki/actionlib_msgs'
+pkgdesc="ROS - Open source libraries that will enable the Kinect to be used with Windows, Linux, and Mac."
+url='http://ros.org/wiki/libfreenect'
 
-pkgname='ros-indigo-actionlib-msgs'
-pkgver='1.11.7'
+pkgname='ros-indigo-libfreenect'
+pkgver='0.5.1'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('Apache 2.0')
 
-ros_makedepends=(ros-indigo-message-generation
-  ros-indigo-catkin
-  ros-indigo-std-msgs)
+ros_makedepends=()
 makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]})
+  ${ros_makedepends[@]}
+  libusbx
+  libxi
+  libxmu
+  freeglut)
 
-ros_depends=(ros-indigo-message-generation
-  ros-indigo-message-runtime
-  ros-indigo-std-msgs)
-depends=(${ros_depends[@]})
+ros_depends=(ros-indigo-catkin)
+depends=(${ros_depends[@]}
+  libusbx
+  libxi
+  libxmu
+  freeglut)
 
-_tag=release/indigo/actionlib_msgs/${pkgver}-${_pkgver_patch}
-_dir=actionlib_msgs
-source=("${_dir}"::"git+https://github.com/ros-gbp/common_msgs-release.git"#tag=${_tag})
+_tag=release/indigo/libfreenect/${pkgver}-${_pkgver_patch}
+_dir=libfreenect
+source=("${_dir}"::"git+https://github.com/ros-drivers-gbp/libfreenect-ros-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
