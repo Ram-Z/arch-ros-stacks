@@ -4,7 +4,13 @@ get_pkgbuild()
 {
     source $1
     echo "pkgname=$pkgname"
-    echo "depends=( ${ros_depends[@]} ${ros_makedepends[@]} )"
+    if [[ "$2" == "ros_depends" ]]; then
+        echo "depends=( ${ros_depends[@]%%[=<>]*} ${ros_makedepends[@]%%[=<>]*} )"
+    elif [[ "$2" == "depends" ]]; then
+        echo "depends=( ${depends[@]%%[=<>]*} )"
+    else
+        echo 'get_pkgbuild() must have either "rosdepends" or "depends" as second argument' >&2
+    fi
 }
 
 get_version()
@@ -47,12 +53,22 @@ get_from_list()
     fi
 }
 
+get_rosdepends()
+{
+    for pkgbuild in ${@}; do
+        source <(get_pkgbuild $pkgbuild "rosdepends")
+        for depend in ${depends[@]}; do
+            printf "%s %s\n" "$depend" "$pkgname"
+        done
+    done
+}
+
 get_depends()
 {
     for pkgbuild in ${@}; do
-        source <(get_pkgbuild $pkgbuild)
+        source <(get_pkgbuild $pkgbuild "depends")
         for depend in ${depends[@]}; do
-            printf "%s %s\n" "$depend" "$pkgname" >> $tmp
+            printf "%s %s\n" "${depend}" "$pkgname"
         done
     done
 }
@@ -91,25 +107,36 @@ else
     usage
 fi
 
-tmp=$(mktemp)
-get_depends ${pkgbuilds[@]}
-sorted=( $(tsort $tmp) )
-
 makepkgopts+=("--asdeps" "--noconfirm")
 # [[ $force ]] && makepkgopts+=("--force") || makepkgopts+=("--needed")
 [[ $force ]] || makepkgopts+=("--needed")
 
-#TODO tsort deps
-# dependencies=$(find "./dependencies" -name PKGBUILD)
-# for dependency in ${dependencies[@]}; do
-#     pushd "${dependency%/*}" > /dev/null
-#     source <(get_pkgbuild PKGBUILD)
-#     makepkg -si "${makepkgopts[@]}"
-#     retcode=$?
-#     popd > /dev/null
-#     [[ $retcode -ne 0 ]] && exit $retcode
-# done
+dependencies=( $(find "./dependencies" -name PKGBUILD) )
+sorted_deps=( $(tsort <(get_depends ${dependencies[@]}) ) )
 
+for dependency in ${sorted_deps[@]}; do
+    if pacman -Ssq "^$dependency$" > /dev/null; then
+        continue
+    fi
+    if ! pushd dependencies/"${dependency}" > /dev/null 2>&1 ; then
+        if [[ "$dependency" =~ "python3" ]]; then
+            dependency=${dependency/3/}
+        fi
+        if ! pushd dependencies/"${dependency}" > /dev/null 2>&1 ; then
+            echo "Could not enter dir 'dependencies/${dependency}'" >&2
+            continue
+        fi
+    fi
+    # makepkg -si "${makepkgopts[@]}"
+    retcode=$?
+    popd > /dev/null
+    [[ $retcode -ne 0 ]] && exit $retcode
+done
+
+exit
+
+
+sorted=( $(tsort <(get_rosdepends ${pkgbuilds[@]}) ) )
 source <(get_makepkg_conf)
 for pkgname in ${sorted[@]}; do
     pkgdir=${pkgname#ros-$dir-}
