@@ -1,30 +1,27 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - tf2_msgs."
-url='http://www.ros.org/wiki/tf2_msgs'
+pkgdesc="ROS - MAVLink message marshaling library."
+url='http://qgroundcontrol.org/mavlink/'
 
-pkgname='ros-indigo-tf2-msgs'
-pkgver='0.5.9'
+pkgname='ros-indigo-mavlink'
+pkgver='2015.4.4'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('LGPLv3')
 
-ros_makedepends=(ros-indigo-message-generation
-  ros-indigo-catkin
-  ros-indigo-actionlib-msgs
-  ros-indigo-geometry-msgs)
+ros_makedepends=()
 makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]})
+  ${ros_makedepends[@]}
+  python2)
 
-ros_depends=(ros-indigo-message-generation
-  ros-indigo-actionlib-msgs
-  ros-indigo-geometry-msgs)
-depends=(${ros_depends[@]})
+ros_depends=(ros-indigo-catkin)
+depends=(${ros_depends[@]}
+  python2)
 
-_tag=release/indigo/tf2_msgs/${pkgver}-${_pkgver_patch}
-_dir=tf2_msgs
-source=("${_dir}"::"git+https://github.com/ros-gbp/geometry_experimental-release.git"#tag=${_tag})
+_tag=release/indigo/mavlink/${pkgver}-${_pkgver_patch}
+_dir=mavlink
+source=("${_dir}"::"git+https://github.com/mavlink/mavlink-gbp-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {

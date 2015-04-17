@@ -1,44 +1,57 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Stereo and single image rectification and disparity processing."
-url='http://www.ros.org/wiki/stereo_image_proc'
+pkgdesc="ROS - MAVROS -- MAVLink extendable communication node for ROS with proxy for Ground Control Station."
+url='http://wiki.ros.org/mavros'
 
-pkgname='ros-indigo-stereo-image-proc'
-pkgver='1.12.13'
+pkgname='ros-indigo-mavros'
+pkgver='0.11.1'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('GPLv3, LGPLv3, BSD')
 
-ros_makedepends=(ros-indigo-image-geometry
-  ros-indigo-cv-bridge
+ros_makedepends=(ros-indigo-libmavconn
+  ros-indigo-diagnostic-updater
+  ros-indigo-roscpp
+  ros-indigo-geometry-msgs
+  ros-indigo-std-msgs
   ros-indigo-catkin
-  ros-indigo-image-transport
-  ros-indigo-stereo-msgs
+  ros-indigo-rospy
+  ros-indigo-diagnostic-msgs
+  ros-indigo-std-srvs
+  ros-indigo-message-generation
+  ros-indigo-rosconsole-bridge
   ros-indigo-sensor-msgs
-  ros-indigo-image-proc
-  ros-indigo-dynamic-reconfigure
-  ros-indigo-message-filters
-  ros-indigo-nodelet)
+  ros-indigo-angles
+  ros-indigo-mavlink
+  ros-indigo-tf
+  ros-indigo-pluginlib)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]}
-  opencv)
+  boost)
 
-ros_depends=(ros-indigo-image-geometry
-  ros-indigo-cv-bridge
-  ros-indigo-image-transport
-  ros-indigo-stereo-msgs
+ros_depends=(ros-indigo-libmavconn
+  ros-indigo-diagnostic-updater
+  ros-indigo-roscpp
+  ros-indigo-geometry-msgs
+  ros-indigo-std-msgs
+  ros-indigo-rospy
+  ros-indigo-diagnostic-msgs
+  ros-indigo-std-srvs
+  ros-indigo-message-generation
+  ros-indigo-rosconsole-bridge
   ros-indigo-sensor-msgs
-  ros-indigo-image-proc
-  ros-indigo-dynamic-reconfigure
-  ros-indigo-message-filters
-  ros-indigo-nodelet)
+  ros-indigo-angles
+  ros-indigo-mavlink
+  ros-indigo-tf
+  ros-indigo-pluginlib)
 depends=(${ros_depends[@]}
-  opencv)
+  boost
+  python2)
 
-_tag=release/indigo/stereo_image_proc/${pkgver}-${_pkgver_patch}
-_dir=stereo_image_proc
-source=("${_dir}"::"git+https://github.com/ros-gbp/image_pipeline-release.git"#tag=${_tag})
+_tag=release/indigo/mavros/${pkgver}-${_pkgver_patch}
+_dir=mavros
+source=("${_dir}"::"git+https://github.com/mavlink/mavros-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
