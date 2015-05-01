@@ -1,28 +1,25 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Messages relating to the ROS Computation Graph."
-url='http://ros.org/wiki/rosgraph_msgs'
+pkgdesc="ROS - Mesh Conversion Utility Used to generate .iv files from .stl files."
+url='https://sourceforge.net/projects/ivcon/'
 
-pkgname='ros-indigo-rosgraph-msgs'
-pkgver='1.11.1'
+pkgname='ros-indigo-ivcon'
+pkgver='0.1.5'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('GPL')
 
-ros_makedepends=(ros-indigo-message-generation
-  ros-indigo-catkin
-  ros-indigo-std-msgs)
+ros_makedepends=(ros-indigo-catkin)
 makedepends=('cmake' 'git' 'ros-build-tools'
   ${ros_makedepends[@]})
 
-ros_depends=(ros-indigo-std-msgs
-  ros-indigo-message-runtime)
+ros_depends=()
 depends=(${ros_depends[@]})
 
-_tag=release/indigo/rosgraph_msgs/${pkgver}-${_pkgver_patch}
-_dir=rosgraph_msgs
-source=("${_dir}"::"git+https://github.com/ros-gbp/ros_comm_msgs-release.git"#tag=${_tag})
+_tag=release/indigo/ivcon/${pkgver}-${_pkgver_patch}
+_dir=ivcon
+source=("${_dir}"::"git+https://github.com/ros-gbp/ivcon-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {

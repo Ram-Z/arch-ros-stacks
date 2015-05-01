@@ -1,28 +1,27 @@
 # Script generated with import_catkin_packages.py
 # For more information: https://github.com/bchretien/arch-ros-stacks
-pkgdesc="ROS - Messages relating to the ROS Computation Graph."
-url='http://ros.org/wiki/rosgraph_msgs'
+pkgdesc="ROS - Convex Decomposition Tool for Robot Model."
+url='http://codesuppository.blogspot.com'
 
-pkgname='ros-indigo-rosgraph-msgs'
-pkgver='1.11.1'
+pkgname='ros-indigo-convex-decomposition'
+pkgver='0.1.10'
 _pkgver_patch=0
 arch=('any')
 pkgrel=1
-license=('BSD')
+license=('MIT')
 
-ros_makedepends=(ros-indigo-message-generation
-  ros-indigo-catkin
-  ros-indigo-std-msgs)
+ros_makedepends=(ros-indigo-catkin)
 makedepends=('cmake' 'git' 'ros-build-tools'
-  ${ros_makedepends[@]})
+  ${ros_makedepends[@]}
+  unzip)
 
-ros_depends=(ros-indigo-std-msgs
-  ros-indigo-message-runtime)
-depends=(${ros_depends[@]})
+ros_depends=()
+depends=(${ros_depends[@]}
+  unzip)
 
-_tag=release/indigo/rosgraph_msgs/${pkgver}-${_pkgver_patch}
-_dir=rosgraph_msgs
-source=("${_dir}"::"git+https://github.com/ros-gbp/ros_comm_msgs-release.git"#tag=${_tag})
+_tag=release/indigo/convex_decomposition/${pkgver}-${_pkgver_patch}
+_dir=convex_decomposition
+source=("${_dir}"::"git+https://github.com/ros-gbp/convex_decomposition-release.git"#tag=${_tag})
 md5sums=('SKIP')
 
 build() {
